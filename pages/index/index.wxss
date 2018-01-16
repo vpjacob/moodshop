@@ -1,0 +1,12 @@
+.container{
+  width: 100%;
+
+}
+
+.goodsItem{
+  width: 48%;
+   display: inline-table; 
+  height: 200rpx;
+  background: red;
+  margin: 1% 1% auto;
+}
