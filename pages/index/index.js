@@ -12,9 +12,9 @@ Page({
   },
   //事件处理函数
   bindViewTap: function() {
-    // wx.navigateTo({
-    //   url: '../logs/logs'
-    // })
+    wx.navigateTo({
+      url: '../contact/contact'
+    })
   },
   onLoad: function () {
     app.socket.onMessage((data) => {

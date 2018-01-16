@@ -1,7 +1,7 @@
 <!--index.wxml-->
 <view class="container">
   
- <view class='goodsItem' wx:for='{{goods}}'>
+ <view class='goodsItem' wx:for='{{goods}}' bindtap='bindViewTap'>
  
  </view>
   
