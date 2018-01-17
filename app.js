@@ -1,20 +1,26 @@
 //app.js
 import config from 'etc/config'
-import socket from 'utils/socket'
-
+import Tools from '/utils/Tools'
+import socket from '/utils/socket'
+import comm from 'etc/comm'
 App({
   onLaunch: function () {
-    // 展示本地存储能力
+    // 展示本地存储能力aa
     var logs = wx.getStorageSync('logs') || []
     logs.unshift(Date.now())
     wx.setStorageSync('logs', logs)
 
-    // 登录
-    wx.login({
-      success: res => {
-        // 发送 res.code 到后台换取 openId, sessionKey, unionId
-      }
+    // // 登录
+    comm.globalObj.memberLogin(1,function(){
+
     })
+    socket.openSocket();
+    // wx.login({
+    //   success: res => {
+    //     // 发送 res.code 到后台换取 openId, sessionKey, unionId
+        
+    //   }
+    // })
     // 获取用户信息
     wx.getSetting({
       success: res => {
@@ -42,6 +48,8 @@ App({
 
 
   config: config,
+  Tools:new Tools,
   socket: socket,
+  comm:comm,
 })
   

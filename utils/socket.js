@@ -1,54 +1,16 @@
 const app = getApp()
+// import comm from 'comm'
 import config from '../etc/config'
-console.log(config.wssPath)
 
 class Socket {
-  
   constructor(host) {
     this.host = host
     this.connected = false
-    wx.connectSocket({
-      url: this.host,
-      header: {
-        'content-type': 'application/json'
-      },
-      method: "GET"
-    })
     
-    // 监听连接成功
-    wx.onSocketOpen((res) => {
-      console.log('WebSocket连接已打开！')
-      this.connected = true
-      wx.sendSocketMessage({
-          data: JSON.stringify({
-            cmd: 'JOIN',
-            roomId: '1000'
-          })
-      })
-    })
-
-    // 监听连接断开
-    wx.onSocketError((res) => {
-      console.log('WebSocket连接打开失败，请检查！')
-      this.connected = false
-      wx.connectSocket({
-        url: this.host
-      })
-    })
-
-    // 监听连接关闭
-    wx.onSocketClose((res) => {
-      console.log('WebSocket 已关闭！')
-      this.connected = false
-      wx.connectSocket({
-        url: this.host
-      })
-    })
 
   }
-
   sendMessage(data) {
-    if(!this.connected){
+    if (!this.connected) {
       console.log('not connected')
       return
     }
@@ -57,11 +19,46 @@ class Socket {
     })
   }
 
-  
+openSocket(){
+  if (this.connected){
+    wx.connectSocket({
+      url: this.host
+    })
+  }
+
+  // 监听连接成功
+  wx.onSocketOpen((res) => {
+    console.log('WebSocket连接已打开！')
+    this.connected = true
+    // wx.sendSocketMessage({
+    //   // data: JSON.stringify({
+    //   //   cmd: 'JOIN',
+    //   //   roomId: '1000'
+    //   // })
+    // })
+  })
+
+  // 监听连接断开
+  wx.onSocketError((res) => {
+    console.log('WebSocket连接打开失败，请检查！')
+    this.connected = false
+    wx.connectSocket({
+      url: this.host
+    })
+  })
+
+  // 监听连接关闭
+  wx.onSocketClose((res) => {
+    console.log('WebSocket 已关闭！')
+    this.connected = false
+    wx.connectSocket({
+      url: this.host
+    })
+  })
+}
 
   onMessage(callback) {
-    
-    if(typeof(callback) != 'function')
+    if (typeof (callback) != 'function')
       return
     // 监听服务器消息
     wx.onSocketMessage((res) => {
